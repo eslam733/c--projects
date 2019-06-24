@@ -1,0 +1,61 @@
+#include <iostream>
+#include <time.h>
+using namespace std;
+typedef struct card
+{
+    char *fact;
+    char *faces;
+};
+void add(card *c, char *fact[], char* faces[]);
+void s(card *c);
+void p(card *c);
+int main( void )
+{
+    card c[40];
+    char * fact[] = { "Ace", "Deuce", "Three", "Four", "Five",
+                        "Six", "Seven", "Eight", "Nine", "Ten",
+                        "Jack", "Queen", "King" };
+    char * faces[] = { "Hearts", "Diamonds", "Clubs", "Spades" };
+    srand(time(NULL));
+    add(c, fact, faces);
+    s(c);
+    p(c);
+    
+    return 0;
+}
+void add(card *c, char *fact[], char* faces[])
+{
+    for (int i = 0; i < 40; i++)
+    {
+        c[i].fact = fact[i % 13];
+        c[i].faces = faces[i / 13];
+    }
+    
+}
+void s(card *c)
+{
+    char *temp,j;
+    for (int i = 0; i < 40; i++)
+    {
+        j = rand() % 40;
+        temp = c[i].faces;
+        c[i].faces = c[j].faces;
+        c[j].faces = temp;
+    }
+    
+}
+void p(card *c)
+{
+    for (int i = 0; i < 40; i++)
+    {
+        cout << "  " << c[i].fact << " of " << c[i].faces;
+        if((i+1) % 4 != 0)
+            cout << "  ";
+        else
+        {
+            cout << "\n";
+        }
+         
+    }
+    
+}

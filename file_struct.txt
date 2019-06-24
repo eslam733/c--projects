@@ -1,0 +1,170 @@
+#include <iostream>
+using namespace std;
+typedef struct 
+{
+    unsigned int ac;
+    char first[30];
+    char sec[30];
+    double b;
+}c;
+
+void text();
+void add();
+void update();
+void del();
+int main( void )
+{
+    
+    cout << "\nEnter your choice\n"
+"1 - store a formatted text file of accounts called\n""\"accounts.txt\" for printing\n"
+"2 - update an account\n"
+"3 - add a new account\n"
+"4 - delete an account\n"
+"5 - end program\n?";
+    FILE * ptr;
+    ptr = fopen("records.dat", "ab+");
+    fclose(ptr);
+    int ch;
+    cin >> ch;
+    while (ch != 5)
+    {
+        switch (ch)
+        {
+        case 1:
+            text();
+            break;
+        case 2:
+            update();
+            break;
+        case 3:
+            add();
+            break;
+        case 4:
+            del();
+            break;
+        default:
+            cout << "invalid choose\n";
+            break;
+        }
+
+
+        cout << "Enter your choice: ";
+        cin >> ch;
+    }
+    
+    return 0;
+}
+
+void text()
+{
+    FILE * ptr;
+    if((ptr = fopen("records.dat", "rb")) == NULL)
+        cout << "can't open file\n";
+    else
+    {
+        c e = {0, "", "", 0};
+        int re;
+        while (!feof(ptr))
+        {
+            
+            re = fread(&e, sizeof(c), 1, ptr);
+            if(re != 0 && e.ac != 0)
+            {
+                cout << e.ac << "  " << e.first << "  "  << e.sec << "  " << e.b << "\n";
+            }
+        }
+        fclose(ptr);
+        
+    }
+    
+}
+
+
+void update()
+{
+    cout << "enter account number form 1 to 100: ";
+    int num; cin >> num;
+    FILE * ptr;
+    if((ptr = fopen("records.dat", "rb+")) == NULL)
+        cout << "can't open file";
+    else
+    {
+        c e = {0, "", "", 0};
+        fseek(ptr, (num - 1)*(sizeof(c)), SEEK_SET);
+        fread(&e, sizeof(c), 1, ptr);
+        if(e.ac == 0)
+            cout << "no date to update it.\n";
+        else
+        {
+            cout << e.ac << " " << e.first << " " << e.sec << " " << e.b << "\n";
+            cout << "Enter charge ( + ) or payment ( - ):";
+            float t; cin >> t;
+            e.b += t;
+            cout << e.ac << " " << e.first << " " << e.sec << " " << e.b << "\n";
+            fseek(ptr, (num - 1)*(sizeof(c)), SEEK_SET);
+            fwrite(&e, sizeof(c), 1, ptr);
+        }
+        
+    }
+    fclose(ptr);
+    
+}
+
+
+
+void add()
+{
+    FILE * ptr;
+
+    if((ptr = fopen("records.dat", "rb+")) == NULL)
+        cout << "can't open file";
+    else
+    {
+        c e = {0,"", "", 0};
+        cout << "chooes number from 1 to 100: \n";
+        int num; cin >> num;
+        fseek(ptr, (num - 1)*(sizeof(c)), SEEK_SET);
+        fread(&e, sizeof(c), 1, ptr);
+        if(e.ac == 0)
+        {
+            cout << "firstname" << " secondname" << " balance:\n";
+            cin >> e.first >> e.sec >> e.b;
+            e.ac = num;
+            fseek(ptr, (num - 1)*(sizeof(c)), SEEK_SET);
+            fwrite(&e, sizeof(c), 1, ptr);
+
+        }else
+        {
+            cout << "this account not empty\n";
+        }
+        fclose(ptr);
+        
+
+    }
+    
+}
+void del()
+{
+    cout << "insert numbre account to delete: ";
+    int num; cin >> num;
+    FILE * ptr;
+    if((ptr = fopen("records.dat", "rb+")) == NULL)
+        cout << "can't open the file\n";
+    else
+    {
+        c e = {0, "", "", 0};
+        fseek(ptr, (num - 1)*(sizeof(c)), SEEK_SET);
+        fread(&e, sizeof(c), 1, ptr);
+        if(e.ac == 0)
+            cout << "no account to delete it.\n";
+        else
+        {
+            fseek(ptr, (num - 1)*(sizeof(c)), SEEK_SET);
+            e.ac = 0;
+            fwrite(&e, sizeof(c), 1, ptr);
+            fclose(ptr);
+        }
+        
+    }
+    
+}

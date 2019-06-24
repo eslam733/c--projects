@@ -1,0 +1,110 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+int main(void)
+{
+
+    char name;
+    int c, id, math, e, pl, ec, ma, stat;
+    while(1)
+    {
+
+        cout << "chose 1 to add name or 2 to search or 3 to exit: ";
+        cin >> c;
+        if(c == 1)
+        {
+            fflush(stdin);
+            FILE *file;
+            file = fopen("data.txt", "a+");
+
+            cout << "enter your id: ";
+            cin >> id;
+            fprintf(file, "id:\n%d\n", id);
+            fflush(stdin);
+
+            cout << "enter your name: ";
+            fprintf(file, "%s", "name: ");
+name=getchar();
+             while (name != '.')
+		{
+    
+    putc(name, file);
+name=getchar();
+  }
+            fflush(stdin);
+            fprintf(file, "%c", '\n');
+
+
+            cout << "enter your math grade: ";
+            cin >> math;
+            fprintf(file, "math: %d\n", math);
+            fflush(stdin);
+
+            cout << "enter your English Grade: ";
+            cin >> e;
+            fprintf(file, "English Grade: %d\n", e);
+            fflush(stdin);
+
+            cout << "enter your pl Grade: ";
+            cin >> pl;
+            fprintf(file, "pl Grade: %d\n", pl);
+            fflush(stdin);
+
+            cout << "enter your economic Grade: ";
+            cin >> ec;
+            fprintf(file, "economic Grade: %d\n", ec);
+            fflush(stdin);
+
+            cout << "enter your stat Grade: ";
+            cin >> stat;
+            fprintf(file, "stat Grade: %d\n", stat);
+            fflush(stdin);
+
+            cout << "enter your management Grade: ";
+            cin >> ma;
+            fprintf(file, "management Grade: %d\n", ma);
+            fflush(stdin);
+
+            fprintf(file, "total Grades: %f%\n", ((stat + e + ec + pl + math + ma)/(600.0))*100);
+            fflush(stdin);
+
+            fprintf(file, "%s\n", "******************************************");
+
+            fclose(file);
+
+        }else if(c == 2)
+        {
+            ifstream file;
+            file.open("data.txt");
+            cout << "enter id to search: ";
+            string se, line;
+            cin >> se;
+
+            int of = 0;
+
+            while(!file.eof())
+            {
+                getline(file, line);
+                if((line.compare(se) == 0))
+                {
+                    for(int i = 0; i< 8; i++)
+            {
+                getline(file, line);
+                cout << line << endl;
+            }
+                    break;
+                }
+            }
+
+            
+
+            file.close();
+        }else
+            break;
+
+    }
+
+    return 0;
+}
+
