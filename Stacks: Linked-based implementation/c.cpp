@@ -1,27 +1,45 @@
 #include <stdio.h>
-#define maxstack 6
 #define stackEntry int
 #include "stack.h"
 
-void display(stackEntry e)
+void diplay(stackEntry e)
 {
-    printf("e is %d\n", e);
+    printf("%d\n", e);
 }
+void insert(int e, stack *ps)
+{
+    if(stackempty(ps))
+        push(e, ps);
+    else
+    {
+        int e1;
+        printf("fsas");
+        pop(&e1, ps);
+        insert(e, ps);
+        push(e1, ps);
+    }
+    
+}
+void sort(stack  *ps)
+{
+    for (int i = 0; i < stacksize(ps); i++)
+    {
+        int e;
+        pop(&e, ps);
+        insert(e, ps);
+    }
+    
+}
+
 
 int main(void)
 {
     stack s;
-    createstack(&s);
-    int x;
-    while(scanf("%d", &x) && x != 'z')
-    {
-        if(!stackfull(&s))
-            push(x, &s);
-        else
-            printf("stack is full\n");
-    }
-    pop(&x, &s);
-   
-    printf("%d\n",stacksize(&s));
+    push(2, &s);
+    push(1, &s);
+    push(5, &s);
+    prints(&s, &diplay);
+    sort(&s);
+    prints(&s, &diplay);
     return 0;
-}
+}   

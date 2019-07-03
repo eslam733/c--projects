@@ -1,51 +1,80 @@
 #include <stdio.h>
+#include <cstdlib>
+typedef struct stacknode
+{
+    stackEntry entry;
+    struct stacknode *next;
+    
+}stacknode;
 
 typedef struct stack
 {
-    int top;
-    stackEntry entry[maxstack];
+    stacknode *top;
+    int size;
 }stack;
+
 
 void createstack(stack *ps)
 {
-    ps->top = 0;
+    ps->top = NULL;
+    ps->size = 0;
 }
-int stackfull(stack *ps)
+
+void push(stackEntry e, stack *ps)
 {
-    return ps->top >= maxstack;
+    stacknode *pn = (stacknode*)malloc(sizeof(stacknode));
+    pn->entry = e;
+    pn->next = ps->top;
+    ps->top = pn;
+    ps->size++;
 }
-void push(stackEntry e,stack *ps)
-{
-    ps->entry[ps->top++] = e;
-}
-int stackempty(stack *ps)
-{
-    return !ps->top;
-}
+
 void pop(stackEntry *pe, stack *ps)
 {
-    *pe = ps->entry[--ps->top];
+    *pe = ps->top->entry;
+    stacknode *pn = ps->top;
+    ps->top = pn->next;
+    free(pn);
+    ps->size--;
 }
 
-void stacktop(stackEntry *pe, stack *ps)
+int stackempty(stack *ps)
 {
-    *pe = ps->entry[ps->top-1];
+    if(ps->top == NULL)
+        return 1;
+    else
+    {
+        return 0;
+    }
+    
 }
 
-int stacksize(stack *ps)
+int stackfull(stack *ps)
 {
-    return ps->top;
+    return 0;
 }
 
 void clearstack(stack *ps)
 {
-    ps->top = 0;
+    stacknode *pn = ps->top;
+    while(pn)
+    {
+        pn = pn->next;
+        ps->top = NULL;
+        ps->top = pn;
+    }
+    ps->size = 0;
 }
 
-
-void traversestack(stack *ps, void (*pf)(stackEntry))
+void prints(stack *ps, void(*pf)(stackEntry))
 {
-    for (int i = ps->top; i > 0; i--)
-        (*pf)(ps->entry[i-1]);
+    int i = 0;
+    for (stacknode *pn = ps->top; pn && i < ps->size; i++, pn = pn->next)
+        (*pf)(pn->entry);
     
 }
+int stacksize(stack *ps)
+{
+    return ps->size;
+}
+
