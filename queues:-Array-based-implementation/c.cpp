@@ -15,7 +15,10 @@ int main(void)
     {
         push(i, &q);
     }
-    
+    pop(&e, &q);
+    pop(&e, &q);
+    pop(&e, &q);
+    pop(&e, &q);
     qprint(&q, &print);
     return 0;
 }

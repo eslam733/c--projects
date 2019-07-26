@@ -53,10 +53,11 @@ void queueclear(queue *pq)
 
 void qprint(queue *pq, void(*pf)(queueEntry))
 {
-    int pos = 0;
-    for (pos; pos < pq->size; pos++)
+        int pos = pq->front;
+    for (int s = 0; s < (pq->size); s++)
     {
         (*pf)(pq->entry[pos]);
+        pos = (pos+1) % maxqueue;
     }
     
 }
