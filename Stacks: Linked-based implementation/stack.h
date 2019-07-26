@@ -60,7 +60,7 @@ void clearstack(stack *ps)
     while(pn)
     {
         pn = pn->next;
-        ps->top = NULL;
+        free(ps->top);
         ps->top = pn;
     }
     ps->size = 0;
