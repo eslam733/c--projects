@@ -15,6 +15,7 @@ using namespace std;
 // }
  
  
+ 
 // struct COMPARE { 
 //   bool operator()(pair<string,ll> const& P1, pair<string,ll> const& P2) 
 //     { 
@@ -28,12 +29,23 @@ using namespace std;
 
 class num{
 	private:
-		int n;
+		int n, arr[5];
 	public:
-		num(){};
+		num(){
+            ar();
+            
+        };
+        void ar()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                arr[i] = i;
+            }
+        }
 		num(int n)
 		{
 			this->n = n;
+            ar();
 		}
 		int get(){return n;}
 		num operator+(num x)
@@ -116,7 +128,14 @@ class num{
             output << c1.n;
             return output;
         }
-
+        operator int()
+        {
+            return (int)n;
+        }
+        int operator[](int x)
+        {
+            return arr[x];
+        }
 };
 
 
@@ -124,8 +143,7 @@ int main()
 {     
     
     num x;
-    cin >> x;
-    cout << x;
+    cout << x[2];
     cerr << clock()*1.0/CLOCKS_PER_SEC<<endl;
     return 0;
     
