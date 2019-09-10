@@ -1,29 +1,30 @@
 #include <bits/stdc++.h>
-const int N = 1e6 + 9, M = 1e7, OO = 0x3f3f3f3f;
+//#include "header.h"
+const int N = 1e6 + 9, M = 1e7, OO = 0x3f3f3f3f, eps = 0.001;
 #define IO() assert(freopen("in.in", "rt", stdin)), assert(freopen("out.out", "wt", stdout))
 #define ll long long int
+#define popcnt(a) __builtin_popcount(a) // count one in binary
+#define GCD(a, b) __gcd(a, b)
+#define FastIO() ios::sync_with_stdio(false), cin.tie(0);
 using namespace std;
-#ifdef _LOCAL_DEFINE
-template <typename... T>
-void debug(T &... args)
-{
-    ((cerr << args << " "), ...);
-    cerr << endl;
-} 
-#endif
-
-
-struct COMPARE { 
-  bool operator()(pair<string,int> const& P1, pair<string,int> const& P2) 
-    { 
+// template <typename... T>
+// void debug(T &... args)
+// {
+//     ((cerr << args << " "), ...);
+//     cerr << endl;
+// }
+ 
+ 
+// struct COMPARE { 
+//   bool operator()(pair<string,ll> const& P1, pair<string,ll> const& P2) 
+//     { 
         
-        return P2.second > P1.second;
+//         return P1.second < P2.second;
         
         
-    }  
-};
-
-//priority_queue<pair<string,int>,vector<pair<string,int>>,COMPARE >pq;
+//     }  
+// };
+//priority_queue<pair<string,ll>,vector<pair<string,ll>>,COMPARE >pq;
 
 class num{
 	private:
@@ -41,7 +42,14 @@ class num{
 			nn.n = n + x.n;
 			return nn;
 		}
-		nun operator+=(num x)
+        num operator+(int x)
+		{
+			num nn;
+			nn.n = n + x;
+			return nn;
+		}
+       
+		num operator+=(num x)
 		{
 			n += x.n;
 			return *this;
@@ -71,21 +79,54 @@ class num{
 			n = -n;
 			return *this;
 		}
+        bool operator==(num b)
+        {
+            return (this->n == b.n);
+        }
+        bool operator<=(num b)
+        {
+            return (this->n <= b.n);
+        }
+        bool operator>=(num b)
+        {
+            return (this->n >= b.n);
+        }
+        bool operator!=(num b)
+        {
+            return (this->n != b.n);
+        }
 		static bool equl(num x, num y)
 		{
-			if(x.n == y.n) return true;
-			else return false;
+			return (x.n == y.n);
 		}
+        friend num operator+(int n, num c1)
+        {
+            num c3;
+            c3.n = c1.n + n;
+            return c3;
+        }
+        friend istream& operator>>(istream &input, num& c1)
+        {
+            input >> c1.n;
+            return input;
+            
+        }
+        friend ostream& operator<<(ostream &output, num& c1)
+        {
+            output << c1.n;
+            return output;
+        }
 
 };
+
+
 int main()
 {     
-    num n1(0), n3;
-	
-	cout << !n1;
-    //#ifdef _LOCAL_DEFINE
+    
+    num x;
+    cin >> x;
+    cout << x;
     cerr << clock()*1.0/CLOCKS_PER_SEC<<endl;
-    //#endif
     return 0;
     
 }
