@@ -238,3 +238,20 @@ bool deletet(tree *Root, vtree v)
         return 1;
     }
 }
+
+void level_or(tree *Root, void(*pf)(vtree))
+{
+    if(Root == NULL) return;
+
+    queue<treenode *> q;
+    q.push(Root->root);
+    while (!q.empty())
+    {
+        treenode * cur = q.front();
+        if(cur->pre != NULL) q.push(cur->pre);
+        if(cur->next != NULL) q.push(cur->next);
+        (*pf)(cur->val);
+        q.pop();
+    }
+    
+}

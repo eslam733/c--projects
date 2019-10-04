@@ -10,13 +10,11 @@ int main()
 {
     tree t;
     createtree(&t); 
-    push(3, &t);
-    push(2, &t);
-    push(1, &t);
-    push(11, &t);
     push(5, &t);
     push(4, &t);
-    cout <<deletet(&t, 3) << endl;
-    cout << sizetree(&t);
+    push(3, &t);
+    push(6, &t);
+    push(7, &t);
+    level_or(&t, &p);
     return 0;
 } 
